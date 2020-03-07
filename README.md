@@ -1,7 +1,7 @@
 # leechem: Python code for the Leech SBEM Datasets - ReadMe
 
 ## 1. Introduction
-The *leechem* repository provides python code to retrieve data from SBEM (serial-block face electron microscopy) database.  
+The *leechem* repository provides python code to retrieve data from SBEM (serial-block face electron microscopy) as well as Voltage Sensitive Dye (VSD) Imaging data.  
 
 - The **Database**: Contains SBEM reconstruction of the canonical ganglion 10 from the leech. The focus has in particular been on the reconstruction of presynaptic projections to neuron DE3 (tree id 444 in the database), the dorsal excitatory motorneuron 3.
 
