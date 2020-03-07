@@ -1,0 +1,92 @@
+SBEM (xray-VSDI) IDs,Canonical map ID,type of partnerneuron,Role,SBEM certainity,VSDI-Uct match` certainity,gmap certainity,Number of synapses
+367(114-dk),DE3L,presynaptic,Nonrectifying gap junction with cell DE-3(contra) [1].,10,100,100,4
+375(21-a),Rz,presynaptic,,10,100,100,2
+376(222),-,presynaptic,,10,-,-,6
+387(33-k),25L,presynaptic,Swim initiator.,10,80,50,1
+388(112-dn),4L,presynaptic,Excitor of ventromedial longitudinal muscles.,10,80,100,3
+415(415),-,presynaptic,,10,-,-,2
+431(90-ft),5R,presynaptic,Nonrectifying gap junction with cell DE-3(ipsi).,10,100,80,5
+450(110-dj),7R,presynaptic,,10,100,80,2
+487(65-fs),4R,presynaptic,No connections with dorsal motorneurons [1].,10,100,100,3
+509(208-di),2L,,Inhibitor of ventral longitudinal muscles,5,80,80,1
+512(332-bb),HE L,presynaptic,,30,80,100,6
+546(43-fu),6L,presynaptic,Active during local bend.,20,80,60,14
+546(43-fu),6L,postsynaptic,Active during local bend.,5,80,60,1
+9(174-bc),151L,presynaptic,Nonspiking interneuron The nonspiking cell is an interneuron with inhibitory rectifying electrical synapses to many motor neurons. The NS cell also receives input from many motor neurons (through chemical synapses).,30,80,100,8
+423,-,presynaptic,"next ganglion (anterior, posterior)",65,-,-,1
+424,-,presynaptic,"next ganglion (anterior, posterior)",65,-,-,1
+523,-,presynaptic,to the posterior ganglion,65,-,-,1
+239(76),-,presynaptic,,65,-,-,1
+254(224),-,presynaptic,,65,-,-,1
+338(314),-,postsynaptic,,65,-,-,1
+391(368),-,presynaptic,,65,-,-,1
+410(64-go),13,presynaptic,No description available,65,80,20,1
+465(294),-,presynaptic,,65,-,-,1
+475(277-x),153,presynaptic,Receives excitatory photosensory input; active during swimming.,65,60,80,1
+490(124-dr),15 ? (or 15 is eq?),presynaptic,No description available,50,80,40,1
+504(62-gi),25R,postsynaptic,,65,80,40,1
+553(167),-,presynaptic,,65,-,-,1
+567(26-cf),256L,postsynaptic,No description available,65,80,50,1
+573 (-),-,presynaptic,"next ganglion (anterior, posterior)",65,-,-,1
+587(61-gh),-,presynaptic,,65,80,40,1
+602(123-dl),11L,presynaptic,Excitor of ventral circular muscles. ,50,60,70,1
+268(67-fp),2R,presynaptic,Inhibitor of ventral longitudinal muscles. ,70,80,70,2
+27(386),-,presynaptic,,80,-,-,2
+32(284-y),154R,presynaptic,Receives excitatory photosensory input,80,60,40,2
+37(156-bk),156L,presynaptic,No description available,80,100,70,2
+400(494),-,postsynaptic,,80,-,-,2
+483 (106-he),101,presynaptic,inhibitor of dorsoventral muscles,80,100,50,2
+52 (107-hf),125R,,local bend interneuron,80,100,40,2
+594(232-ai),216L,presynaptic,Unknown function; receives excitatory photosensory input.,80,80,30,2
+7(385-z),151L,presynaptic,The nonspiking cell is an interneuron with inhibitory rectifying electrical synapses to many motor neurons. The NS cell also receives input from many motor neurons (through chemical synapses). ,70,60,70,2
+235(77),-,presynaptic,,80,-,-,3
+236(89),-,presynaptic,,80,-,-,3
+260(73),-,presynaptic,,80,-,-,3
+326(18),-,presynaptic,,80,-,-,3
+338(314),-,presynaptic,,80,-,-,3
+400(494),-,presynaptic,,80,-,-,3
+44(292-hr),104,presynaptic,,80,100,30,3
+478(75-fx),20R,presynaptic,No description available,80,100,70,3
+495 (162),-,,No description available,80,-,-,3
+500(213),-,presynaptic,,80,-,-,3
+514 (273),-,,Not known,80,-,-,3
+520,-,,No description available,80,-,-,3
+609(81-fw),L-R,presynaptic,Leydig cell,80,100,100,3
+91(134),-,presynaptic,,80,-,-,3
+445,-,presynaptic,"next ganglion (anterior, posterior)",80,-,-,4
+227(87),-,presynaptic,,80,-,-,4
+234(80),-,presynaptic,,80,-,-,4
+373(352-dx),18L,presynaptic,Excitor of dorsal longitudinal muscles.,80,80,30,4
+449(209-dh),1L,presynaptic,Inhibitory synapse onto cell DE-3,100,100,100,4
+474,-,,Neighbour ganglia,80,-,-,5
+560,-,presynaptic,to the anterior ganglion,80,-,-,5
+13(383),-,presynaptic,,80,-,-,5
+267(39-gb),9R,presynaptic,inhibitor of longitudinal muscles,80,100,30,5
+496(248),-,presynaptic,,80,-,-,5
+428,-,presynaptic,"next ganglion (anterior, posterior)",80,-,-,6
+109(141),-,presynaptic,,80,-,-,6
+409(55-gq),29R,presynaptic,No description available,80,100,20,6
+561(333),-,presynaptic,,80,-,-,6
+474,-,presynaptic,"next ganglion (anterior, posterior)",80,-,,7
+224(78),-,presynaptic,,100,-,-,7
+507(97-hg),102R,presynaptic,"Inhibitor of dorsal longitudinal muscles, onto DE3",100,100,50,7
+516 (212-dz),10L,,No description available,90,100,30,7
+585(125),-,presynaptic,,90,-,-,7
+588(58-gn),-,presynaptic,,90,80,?,7
+418,-,presynaptic,,90,-,-,8
+144(179),-,presynaptic,not known,90,-,-,8
+344(215-if),-,presynaptic,,90,100,70,8
+564(303),-,presynaptic,,90,-,-,8
+589(45),-,presynaptic,,90,-,-,9
+11(285),-,presynaptic,,90,-,-,10
+205(255),-,presynaptic,,90,-,-,11
+501 (13-d),E-21R,,swim trigger interneuron with gating properties,90,80,70,11
+2(288-hu),107R,presynaptic,Excitor of dorsomedial longitudinal muscles; No connections with ventral motorneurons [2]. gap junction with cell DE-3(ipsi).  ,70,80,80,12
+245(91-fv),,presynaptic,,70,80,60,13
+393 (211-eb),24L,,No description available.,100,80,30,14
+504(62-gi),25R,presynaptic,,100,100,40,14
+519 (40-ga),10R,,No description available,100,100,30,15
+70 (103-hn),103R,presynaptic,No description available.,100,80,30,16
+421,,presynaptic,"next ganglion (anterior, posterior)",100,-,-,17
+545(66-fo),1R,presynaptic,inhibitory synapse onto right DE3,100,100,100,53
+130 (146-eu),125L,presynaptic,local bend interneuron,75,100,40
