@@ -5,7 +5,16 @@ The *leechem* repository provides python code to retrieve data from SBEM (serial
 
 - The **Database**: Contains SBEM reconstruction of the canonical ganglion 10 from the leech. The focus has in particular been on the reconstruction of presynaptic projections to neuron DE3 (tree id 444 in the database), the dorsal excitatory motorneuron 3.
 
-- The **Python code**: Accesses the data collected during the reconstruction and provides for instance x,y,z coordinates on the different measurement points (nodes) which are annotated with their anatomical descriptors (e.g. "soma" or "presynaptic terminal"). The code accesses the data, but also provides functions to perform data analysis. The most important methods are to be found in the sbemdb class within the sbemdb.py python file.
+- The **Python code**: 
+
+Accesses the Electron Microscopy (EM) as well as the Voltage Sensitive Dye (VSD) data, allows for visualization and data analysis:
+
+> Functions defined in the *sbemdb* class allow for retrieval of the EM reconstructions. The functions defined here allow for instance for the retrieval of the coordinates of the neurites and the synapses.
+
+> Visualization: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites.
+
+> Clustering: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
+
 
 ## 2. Installation
 
