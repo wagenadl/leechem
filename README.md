@@ -9,11 +9,11 @@ The *leechem* repository provides python code to retrieve data from SBEM (serial
 
 Accesses the Electron Microscopy (EM) as well as the Voltage Sensitive Dye (VSD) data, allows for visualization and data analysis:
 
-> Functions defined in the *sbemdb* class allow for retrieval of the EM reconstructions. The functions defined here allow for instance for the retrieval of the coordinates of the neurites and the synapses.
++ Functions defined in the *sbemdb* class allow for retrieval of the EM reconstructions. The functions defined here allow for instance for the retrieval of the coordinates of the neurites and the synapses.
 
-> Visualization: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites.
++ Visualization: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites.
 
-> Clustering: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
++ Clustering: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
 
 
 ## 2. Installation
