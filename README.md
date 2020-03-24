@@ -1,11 +1,21 @@
 # leechem: Python code for the Leech SBEM Datasets - ReadMe
 
 ## 1. Introduction
-The *leechem* repository provides python code to retrieve data from SBEM (serial-block face electron microscopy) database.  
+The *leechem* repository provides python code to retrieve, visualize and analyze data from serial-block face electron microscopy (SBEM) as well as Voltage Sensitive Dye (VSD) Imaging data.  
 
-- The **Database**: Contains SBEM reconstruction of the canonical ganglion 10 from the leech. The focus has in particular been on the reconstruction of presynaptic projections to neuron DE3 (tree id 444 in the database), the dorsal excitatory motorneuron 3.
+- The SBEMDB **Database**: Contains SBEM reconstruction of the canonical ganglion 10 from the leech with reconstructions of the neurites and synapses of the ganglion. The focus has in particular been the reconstruction of presynaptic projections to neuron DE-3R (tree id 444 in the database), an output motor neuron of the circuit.
 
-- The **Python code**: Accesses the data collected during the reconstruction and provides for instance x,y,z coordinates on the different measurement points (nodes) which are annotated with their anatomical descriptors (e.g. "soma" or "presynaptic terminal"). The code accesses the data, but also provides functions to perform data analysis. The most important methods are to be found in the sbemdb class within the sbemdb.py python file.
+- The **Python code**: 
+
+Accesses the Electron Microscopy (EM) as well as the Voltage Sensitive Dye (VSD) data, allows for visualization and data analysis:
+
++ **Retrieval**: Functions defined in the *sbemdb* class allow for retrieval of the EM reconstructions. The functions defined here allow for instance for the retrieval of the coordinates of the neurites and the synapses.
+
++ **Analysis**: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
+
++ **Visualization**: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites. The jupyter notebook *Visualization_Clusters* 
+illustrates synaptic clusters and their functional properties.
+
 
 ## 2. Installation
 
