@@ -6,15 +6,16 @@ The *leechem* repository provides python code to retrieve, visualize and analyze
 - The SBEMDB **Database**: Contains SBEM reconstruction of the canonical ganglion 10 from the leech with reconstructions of the neurites and synapses of the ganglion. The focus has in particular been the reconstruction of presynaptic projections to neuron DE-3R (tree id 444 in the database), an output motor neuron of the circuit.
 
 - The **Python code**: 
-
 Accesses the Electron Microscopy (EM) as well as the Voltage Sensitive Dye (VSD) data, allows for visualization and data analysis:
 
-+ **Retrieval**: Functions defined in the *sbemdb* class allow for retrieval of the EM reconstructions. The functions defined here allow for instance for the retrieval of the coordinates of the neurites and the synapses.
+  - **Retrieval**: Functions defined in the *sbemdb* module allow for retrieval of the EM reconstructions. The functions defined here allow, for instance, for the retrieval of the coordinates of the neurites and the synapses.
 
-+ **Analysis**: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
+  - **Analysis**: The jupyter notebook *Clustering_synapses* runs the clustering analysis. With the coordinates of synapses as an input, the notebook outputs the membership of synapses to clusters based on a hierarchical clustering approach. 
 
-+ **Visualization**: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites. The jupyter notebook *Visualization_Clusters* 
+  - **Visualization**: The jupyter notebook *Visualization_DE3R* provides an example of the visualization of the neurites of the DE-3R motorneuron and synapses of its presynaptic partners on its neurites. The jupyter notebook *Visualization_Clusters* 
 illustrates synaptic clusters and their functional properties.
+
+  There is also a file called *demo.py* that demonstrates the use of the *sbemdb.py* module.
 
 
 ## 2. Installation
