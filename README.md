@@ -73,5 +73,7 @@ the object oriented code creates a cursor and accesses the database hidden from 
 
 The most convenient way to get started with the code might be by way of the "demo.py" program.
 
+## 4. Contact
 
+This work is meant to contribute to the scientific exchange of neural circuit data and relevant analysis methods. We invite everyone interested to reach out with input or questions. You reach us best by mail via daw@caltech.edu or pegahkf@gmail.com
 
