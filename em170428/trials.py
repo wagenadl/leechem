@@ -8,14 +8,14 @@ import em170428.salpa
 import urllib.request
 import io
 
-def geturltrial(tri):
+def geturltrial(tri, pfx = 'ephysdata'):
     #url = f'file:///home/wagenaar/progs/em170428/data/ephysdata-{tri}.h5'
     password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
     topurl = 'https://leechem.caltech.edu/170428'
     password_mgr.add_password(None, topurl, 'wagenaar', 'x0Vj6Qb8Aj2J')
     handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
     opener = urllib.request.build_opener(handler)
-    url = f'{topurl}/trialdata/ephysdata-{tri}.h5'
+    url = f'{topurl}/trialdata/{pfx}-{tri}.h5'
     with opener.open(url) as resp:
         L = resp.getheader('content-length')
         if L:
@@ -131,7 +131,12 @@ channelnames_ = {
     }
 
 def makestr_(a):
-    return ''.join(chr(x) for x in a['value'])
+    def unpack(x):
+        if type(x)==np.ndarray:
+            return x[0]
+        else:
+            return x
+    return ''.join(chr(unpack(x)) for x in a['value'])
 
 def lookupchannel_(f, name):
     kk = f['ephys_ch']['value'].keys()
@@ -215,3 +220,75 @@ class Trial:
         in the dict are objects with methods TIMESTAMPS, TRACE, and
         CORRESPONDINGROI that can be used to retrieve the contained data.'''
         return self.ephysrec
+
+class Coherence:
+    def __init__(self, trial):
+        '''COHERENCE - Load coherence data for trial.
+        x = COHERENCE(n) loads coherence data for the given trial.
+        Usable numbers are:
+          6 - Swim trial
+          8 - Swim and crawl trial
+          9 - Local bend (P_VL) trial
+         10 - Local bend (P_VL) trial
+         11 - Local bend (P_VL) trial
+         12 - Local bend (P_VR) trial
+         15 - Crawl trial
+         17 - Crawl trial
+        The result is a class with (read-only) member variables:
+          DATA - A dict containing:
+            f - frequency at which results were computed
+            psd - power spectral densities of all signals at that frequency
+            coh - complex coherence
+            mag - coherence magnitudes (ditto)
+            phase - coherence phases (ditto)
+            mag_lo and mag_hi - low and high end of confidence intervals 
+                                for mag
+            phase_lo and phase_hi - ditto for phase
+            thr - threshold for significance
+            cc - color map (signals with mag<thr will be gray)
+          ROIIDS - A list with the names of the ROIs
+          EXTRA - A dict containing:
+            f - frequency vector
+            psd - power spectral densities of all signals at all freqs
+            refpsd - psds of reference at all frequencies
+            tt - time vector
+            sig - detrended debleached signals at those times
+            ref - detrended reference at those times
+            img - raw data for first frame within the time window, 
+                  ventral camera
+            xx and yy - transformed coordinates for that image
+            imgb - raw data for first frame within the time window, 
+                   dorsal camera
+            xxb and yyb - transformed coordinates for that image
+            rois - original rois'''
+
+        self.trial = trial
+        self.data = {}
+        self.extra = {}
+        with geturltrial(trial, 'coh') as coh:
+            coh = coh['coh']['value']
+            for fld in ['psd', 'mag', 'phase',
+                        'mag_lo', 'mag_hi', 'phase_lo', 'phase_hi']:
+                self.data[fld] = np.array(coh[fld]['value']).flatten()
+            self.data['cc'] = np.array(coh['cc']['value'])
+            self.data['coh'] = self.data['mag'] * np.exp(1j*self.data['phase'])
+            for fld in ['f', 'thr', 'pthr']:
+                self.data[fld] = np.array(coh[fld]['value']).flatten()[0]
+            for fld in ['img', 'xx', 'yy', 'tt', 'sig', 'ref',
+                        'f', 'refpsd', 'psd']:
+                self.extra[fld] = np.array(coh['extra']['value'][fld]['value'])
+            self.extra['rois'] = {}
+            rois = coh['extra']['value']['rois']['value']
+            for k in rois.keys():
+                if k.startswith('_'):
+                    r = int(k[1:])
+                    self.extra['rois'][r] = np.array(rois[k]['value'])
+            N = len(self.data['coh'])
+            self.roiids = []
+            for n in range(N):
+                if n<26:
+                    self.roiids.append(chr(ord('a') + n))
+                else:
+                    self.roiids.append(chr(ord('a') + (n//26-1))
+                                       + chr(ord('a') + (n%26)))
+                    

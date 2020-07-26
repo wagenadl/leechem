@@ -301,7 +301,6 @@ class SBEMDB:
         if len(res) != 1:
             raise KeyError(f'Node {nid} not found')
         tid = res[0][0]
-        print(tid)
         res = self.fetch(f'''select
            n1.x, n1.y, n1.z, n1.nid, n2.x, n2.y, n2.z, n2.nid
            from nodes as n1
