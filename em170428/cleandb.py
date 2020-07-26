@@ -3,19 +3,21 @@ import numpy as np;
 from countrows import count_rows;
 from shutil import copyfile;
 from sbemdb import SBEMDB;
+from mapping import Mapping;
 
 def clean_db(db):
     src = db.dbfn
-    dst = os.path.join('..','data', '170428_ganglion10_modified.sbemdb')
+    dst = os.path.join('..','data', '170428_pub_modified.sbemdb')
     copyfile(src, dst)
     db = SBEMDB(dst)
         
     # CONSTRAINTS
     # get trees which have roi
     roi_tree_ids = []
-    for roi in db.mapping.roi2sbem:
-        if roi != '' and db.mapping.roi2sbem[roi] != '':
-            roi_tree_ids.append(db.mapping.roi2sbem[roi])
+    mapper = Mapping()
+    for roi in mapper.roi2sbem:
+        if roi != '' and mapper.roi2sbem[roi] != '' and mapper.roi2sbem[roi] is not None:
+            roi_tree_ids.append(mapper.roi2sbem[roi])
             
     # get trees, which have at least 1 connection
     cons_tree_ids = []
@@ -97,9 +99,10 @@ def clean_db_uct(db):
     # CONSTRAINTS
     # get trees which have roi
     uct_tree_ids = []
-    for uct in db.mapping.uct2sbem:
-        if uct != '' and db.mapping.uct2sbem[uct] != '':
-            uct_tree_ids.append(db.mapping.uct2sbem[uct])
+    mapper = Mapping()
+    for uct in mapper.uct2sbem:
+        if uct != '' and mapper.uct2sbem[uct] != '' and mapper.uct2sbem[uct] is not None:
+            uct_tree_ids.append(mapper.uct2sbem[uct])
             
     # get trees, which have at least 1 connection
     cons_tree_ids = []
