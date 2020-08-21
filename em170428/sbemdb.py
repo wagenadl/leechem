@@ -5,6 +5,45 @@ import sqlite3
 import errno
 import os
 
+class LineSegmentGeom:
+    def _dif(pa, pb):
+        return [pa[k] - pb[k] for k in range(3)]
+    def _inner(a, b):
+        return sum([a[k]*b[k] for k in range(3)])
+    def _addmul(p, dp, t):
+        return [p[k] + t*dp[k] for k in range(3)]
+    def _length(dp):
+        return np.sqrt(LineSegmentGeom._inner(dp,dp))
+    def pointDistance(p, p1, p2):
+        '''POINTDISTANCE - Distance between a point and a line segment
+        d = POINTDISTANCE(p, p1, p2) returns the Euclidean distance
+        between the point P (expressed as an (x,y,z)-tuple) and the line segment
+        between the points P1 and P2 (expressed analogously.
+        The result is returned in the same units as the input coordinates.'''
+        # Let P, P1, P2 be the points (x,y,z), (x1,y1,z1) and (x2,y2,z2)
+        # The line segment is defined by
+        # P' = P1 + T (P2-P1)
+        # We are seeking the value of T that minimizes D := ||P' - P||
+        # constrained by 0 <= T <= 1.
+        # Find that by demanding that d(D²)/dT = 0:
+        #    D² = sum_i [ P1_i + T (P2_i - P1_i) - P_i ]²,
+        # where i iterates over x, y, z. Thus:
+        #   0 = sum_i [ P1_i + T (P2_i - P1_i) - P_i ] [P2_i - P1_i].
+        # Separting terms with and without T is easy.
+        #   0 = sum_i [P1_i - P_i][P2_i - P1_i] + T sum_i[P2_i - P1_i]^2
+        dif1 = LineSegmentGeom._dif(p1, p)
+        dif2 = LineSegmentGeom._dif(p2, p1)
+        num = -LineSegmentGeom._inner(dif1, dif2)
+        denom = LineSegmentGeom._inner(dif2, dif2)
+        t = num/denom
+        if t<0:
+            t = 0
+        elif t>1:
+            t = 1
+        pp = LineSegmentGeom._addmul(p1, dif2, t)
+        return LineSegmentGeom._length(LineSegmentGeom._dif(p, pp))
+
+
 class Node:
     def __init__(self, nid, tid, typ, x, y, z, cdate, uid):
         '''NODE - A tree node from the NODES table.
@@ -351,32 +390,4 @@ class SBEMDB:
         p = self.onenodexyz(nid)
         p1 = self.onenodexyz(nid1)
         p2 = self.onenodexyz(nid2)
-        def dif(pa, pb):
-            return [pa[k] - pb[k] for k in range(3)]
-        def inner(a, b):
-            return sum([a[k]*b[k] for k in range(3)])
-        def addmul(p, dp, t):
-            return [p[k] + t*dp[k] for k in range(3)]
-        def length(dp):
-            return np.sqrt(inner(dp,dp))
-        # Let P, P1, P2 be the points (x,y,z), (x1,y1,z1) and (x2,y2,z2)
-        # The line segment is defined by
-        # P' = P1 + T (P2-P1)
-        # We are seeking the value of T that minimizes D := ||P' - P||
-        # constrained by 0 <= T <= 1.
-        # Find that by demanding that d(D²)/dT = 0:
-        #    D² = sum_i [ P1_i + T (P2_i - P1_i) - P_i ]²,
-        # where i iterates over x, y, z. Thus:
-        #   0 = sum_i [ P1_i + T (P2_i - P1_i) - P_i ] [P2_i - P1_i].
-        # Separting terms with and without T is easy.
-        #   0 = sum_i [P1_i - P_i][P2_i - P1_i] + T sum_i[P2_i - P1_i]^2
-        dif1 = dif(p1, p)
-        dif2 = dif(p2, p1)
-        t = -inner(dif1, dif2) / inner(dif2, dif2)
-        if t<0:
-            t = 0
-        elif t>1:
-            t = 1
-        pp = addmul(p1, dif2, t)
-        return length(dif(p, pp))
-    
+        return LineSegmentGeom.pointDistance(p, p1, p2)
