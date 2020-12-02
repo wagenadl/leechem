@@ -75,7 +75,7 @@ SBEM (xray-VSDI) IDs,Canonical map ID,type of partnerneuron,Role,SBEM certainity
 588(58-gn),-,presynaptic,,90,80,?,7
 418,-,presynaptic,,90,-,-,8
 144(179),-,presynaptic,not known,90,-,-,8
-344(215-if),-,presynaptic,,90,100,70,8
+344(215-if),109R,presynaptic,,90,100,70,8
 564(303),-,presynaptic,,90,-,-,8
 589(45),-,presynaptic,,90,-,-,9
 11(285),-,presynaptic,,90,-,-,10

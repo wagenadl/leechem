@@ -344,11 +344,20 @@ class SBEMDB:
         '''DISTANCEALONGTREE - Distance along tree between nodes
         dd = DISTANCEALONGTREE(nid) returns the distance along the tree from
         the given node as a dict mapping nodes to distance in microns.
+        Instead of a single node ID, NID may also be a list of nodes, in
+        which case the distances are measured to the nearest node in the
+        list.
         See example of use in demo.py.'''
+
+        islist = type(nid)==list or type(nid)==np.ndarray or type(nid)==tuple
+        if islist:
+            nid0 = nid[0]
+        else:
+            nid0 = nid
             
-        res = self.fetch(f'select tid from nodes where nid={nid}')
+        res = self.fetch(f'select tid from nodes where nid={nid0}')
         if len(res) != 1:
-            raise KeyError(f'Node {nid} not found')
+            raise KeyError(f'Node {nid0} not found')
         tid = res[0][0]
         res = self.fetch(f'''select
            n1.x, n1.y, n1.z, n1.nid, n2.x, n2.y, n2.z, n2.nid
@@ -361,7 +370,9 @@ class SBEMDB:
         facxy = self.pixtoum(1)**2
         facz = self.slicetoum(1)**2
         for x1, y1, z1, n1, x2, y2, z2, n2 in res:
-            dst = np.sqrt(facxy*(x1-x2)**2 + facxy*(y1-y2)**2 + facz*(z1-z2)**2)
+            dst = np.sqrt(facxy*(x1-x2)**2
+                          + facxy*(y1-y2)**2
+                          + facz*(z1-z2)**2)
             if n1 not in neighbors:
                 neighbors[n1] = {}
             neighbors[n1][n2] = dst
@@ -369,8 +380,12 @@ class SBEMDB:
                 neighbors[n2] = {}
             neighbors[n2][n1] = dst
 
-        distances = { nid: 0 }
-        frontier = [ nid ]
+        if islist:
+            distances = { n: 0 for n in nid }
+            frontier = [ n for n in nid ]
+        else:
+            distances = { nid: 0 }
+            frontier = [ nid ]
         while len(frontier):
             newfrontier = []
             for k in frontier:
@@ -382,6 +397,54 @@ class SBEMDB:
             frontier = newfrontier
         return distances
 
+    def farthestNode(self, node1):
+        '''FARTHESTNODE - Find node farthest from given node
+        nid1 = FARTHESTNODE(nid) returns the ID of the node that is farthest
+        from node NID along its tree.'''
+        all_dist = self.distanceAlongTree(node1)
+        nid_far = None
+        dist_far = -1
+        for nid, dist in all_dist.items():
+            if dist>dist_far:
+                dist_far = dist
+                nid_far = nid
+        return nid_far
+
+    def pathBetweenNodes(self, node1, node2):
+        '''PATHBETWEENNODES - Sequence of nodes between given nodes
+        nids = PATHBETWEENNODSE(nid1, nid2) returns a list of all the nodes
+        on the path between the given end nodes, including those end nodes.'''
+        rows = self.fetch(f'''select tid from nodes
+                          where nid=={node1} limit 1''')
+        tid = rows[0][0]
+
+        all_dist = self.distanceAlongTree(node2)
+
+        rows = self.fetch(f'''select nc.nid1, nc.nid2 from nodecons as nc
+                          inner join nodes as n on nc.nid2==n.nid 
+                          where n.tid=={tid}''')
+        all_cons = {}
+        for nid1, nid2 in rows:
+            if nid1 not in all_cons:
+                all_cons[nid1] = []
+            all_cons[nid1].append(nid2)
+
+        path = [node1]
+        while path[-1] != node2:
+            here = path[-1]
+            dst = all_dist[here]
+            nxt = None
+            for nxt1 in all_cons[here]:
+                if all_dist[nxt1] < dst:
+                    if nxt is None:
+                        nxt = nxt1
+                    else:
+                        raise Exception('Double path!?')
+            if nxt is None:
+                raise Exception('No path!?')
+            path.append(nxt)
+        return path
+    
     def nodeToEdgeDistance(self, nid, nid1, nid2):
         '''NODETOEDGEDISTANCE - Distance between node and an edge 
         NODETOEDGEDISTANCE(nid, nid1, nid2) returns the distance between 
