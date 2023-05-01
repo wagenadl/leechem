@@ -1,23 +1,20 @@
 #!/usr/bin/python3
 
-import sbemdb
-import mapping
-import confidence
-import trials
+import em170428
 
 import numpy as np
 import matplotlib.pyplot as plt 
 
 ############ GENERAL PREPARATION #####################################
 # Connect to the tracing database
-db = sbemdb.SBEMDB()
+db = em170428.sbemdb.SBEMDB()
 
 # Create a mapping object for converting between various forms of neuron ID
-mp = mapping.Mapping()
+mp = em170428.mapping.Mapping()
 
 ############ VSD/EPHYS EXAMPLE #######################################
 # Load electrophysiology/VSD trial #9 (an example of local bending)
-tr = trials.Trial(9)
+tr = em170428.trials.Trial(9)
 
 # Extract timing of electrophysiological stimulus
 stm = tr.stimuli()['P_VL']
@@ -47,7 +44,7 @@ plt.title('VSD trace of DE-3(R) during local bend trial #9')
 
 ############ VSD/EM EXAMPLE ##########################################
 # Load electrophysiology/VSD trial #6 (an example of fictive swimming)
-tr = trials.Trial(6)
+tr = em170428.trials.Trial(6)
 
 # Extract timestamps for the VSD recording
 tt = tr.vsd().timestamps()[0]
@@ -157,3 +154,38 @@ plt.xlabel('Distance (μm)')
 plt.ylabel('Synapse count')
 plt.title('Postsynaptic distance along tree for synapses from DI-1(R) onto DE-3(R)')
 
+########################## RAW EM DATA EXAMPLE #1 ######################
+idb = em170428.sbemimage.ImageDB()
+# A series of 2x-zoom steps into the raw data
+f, ax = plt.subplots(3,3)
+x = 30
+y = 150
+z = 3000
+for a in range(9):
+    ax.flat[8-a].imshow(idb.tile(x, y, z, a), cmap='gray')
+    x //= 2
+    y //= 2
+    ax.flat[8-a].set_title(f'1 : {2**a}')
+
+
+########################## RAW EM DATA EXAMPLE #1 ######################
+# A piece of 5x5 um of raw EM image around a synapse
+tid_de3 = mp.mapCanonicalNameToTreeID('3_R')
+tid_di1 = mp.mapCanonicalNameToTreeID('1_R')
+where = f'post.tid={tid_de3} and pre.tid={tid_di1}'
+xx,yy,zz,pretid,posttid,synid,prenid,postnid = db.synapses(where, True)
+
+k = 49
+x,y,z = db.onenodexyz(postnid[k])
+a = 1
+ix, iy, iz = idb.umtopix(x,y,z, a)
+sx, sy, sz = idb.voxelsize(a)
+w = int(5/sx)
+h = int(5/sy)
+img = idb.roi(ix-w//2, iy-h//2, iz, w, h, a)
+plt.figure()
+plt.imshow(img, cmap='gray', extent=(-2.5, 2.5, 2.5, -2.5))
+plt.plot(0, 0, '+', color='r')
+plt.xlabel('X (μm)')    
+plt.ylabel('Y (μm)')    
+plt.title('A synapse between DI-1R and DE-3R')
