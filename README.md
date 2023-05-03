@@ -35,6 +35,8 @@ For an introduction to pip, [see here.](https://pip.pypa.io/en/stable/installing
 
 ## 3. Code
 
+The most convenient way to get started with the code might be by way of the ["demo.py" program](https://github.com/wagenadl/leechem/blob/master/demo.py)  or the ["demo.ipynb" notebook](https://github.com/wagenadl/leechem/blob/master/demo.ipynb), which is also available in ["Google Colab"](https://colab.research.google.com/github/wagenadl/leechem/blob/master/demo.ipynb).
+
 ### Python code - A very brief overview
 
 The python code relies mainly on sqlite to retrieve the data from the database. In an SQL environment, the typical process is
@@ -70,8 +72,6 @@ def nodexyz(self, where):
 
 allows the user to retrieve the 3D coordinates of a note and its id ("nid") via for instance "nodexyz('tid==444')", while
 the object oriented code creates a cursor and accesses the database hidden from the user.
-
-The most convenient way to get started with the code might be by way of the "demo.py" program.
 
 ## 4. Contact
 
