@@ -4,7 +4,7 @@ import numpy as np
 import h5py
 import errno
 import os
-import em170428.salpa
+from . import salpa
 import urllib.request
 import io
 
@@ -76,7 +76,7 @@ class VSD:
             for k in range(poly+1):
                 y -= p[k] * x**(poly-k)
         elif tau is not None:
-            s = em170428.salpa.Salpa(tau=tau)
+            s = salpa.Salpa(tau=tau)
             y = s.apply(y)
         return (y, '%')
 

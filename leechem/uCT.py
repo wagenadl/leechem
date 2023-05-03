@@ -11,30 +11,30 @@ class UCT:
         uct = UCT(h5fn) opens the given "uCT-somata.h5" file.
         uct = UCT() opens the default file in the em170428 directory.
         '''
-        if h5fn is None:
-            here = os.path.dirname(__file__)
-            h5fn = here + '/../data/uCT-somata.h5'
-            with h5py.File(h5fn, 'r') as h5:
-                self.somapos = h5['somapos']['value'][:] * 2
-                self.exitpoint = h5['dpp']['value'][:]
-                self.lut = h5['dc']['value'][:]
-                self.tails = {}
-                tt = h5['tails']['value']
-                for k in tt.keys():
-                    if k.startswith('_'):
-                        k1= int(k[1:])
-                        t = tt[k]
-                        t = t['value']
-                        if len(t)==3:
-                            self.tails[k1] = t[:]
-                        else:
-                            self.tails[k] = [[],[],[]] 
+        h5fn = webaccess.ensurefile(h5fn, "uCT-somata.h5")
+        with h5py.File(h5fn, 'r') as h5:
+            self.somapos = h5['somapos']['value'][:] * 2
+            self.exitpoint = h5['dpp']['value'][:]
+            self.lut = h5['dc']['value'][:]
+            self.tails = {}
+            tt = h5['tails']['value']
+            for k in tt.keys():
+                if k.startswith('_'):
+                    k1= int(k[1:])
+                    t = tt[k]
+                    t = t['value']
+                    if len(t)==3:
+                        self.tails[k1] = t[:]
+                    else:
+                        self.tails[k] = [[],[],[]]
+                        
     def somaPosition(self, uctid):
         '''SOMAPOSITION - Position of a soma
         x,y,z = SOMAPOSITION(uctid) returns the position of a soma.
         UCTID must be a UCT ID (for instance, DE3_R is 1; DI1_R is 66).
         X, Y, Z are in UCT pixel coordinates.'''
         return self.somapos[:,uctid-1]
+    
     def exitPointPosition(self, uctid):
         '''EXITPOINTPOSITION - Position of a exit point
         x,y,z = EXITPOINTPOSITION(uctid) returns the position of the point
@@ -42,6 +42,7 @@ class UCT:
         UCTID must be a UCT ID (for instance, DE3_R is 1; DI1_R is 66).
         X, Y, Z are in UCT pixel coordinates.'''
         return self.exitpoint[:,uctid-1]
+    
     def tailPosition(self, uctid):
         '''TAILPOSITION - Position of a tail
         x,y,z = TAILPOSITION(uctid) returns the position of the “tail”

@@ -5,6 +5,7 @@ import csv
 import errno
 import os
 import re
+from . import webaccess
 
 class Confidence:
     def __init__(self, csvfn=None):
@@ -26,11 +27,8 @@ class Confidence:
         self.gmapconf = {}
         self.vsd2tree = {}
 
-        if csvfn is None:
-            here = os.path.dirname(__file__)
-            csvfn = here + '/../data/confidence.csv'
         lines = []
-        with open(csvfn) as f:
+        with webaccess.opentextfile(csvfn, "confidence.csv") as f:
             dl = csv.unix_dialect()
             rdr = csv.reader(f, dl)
             for row in rdr:

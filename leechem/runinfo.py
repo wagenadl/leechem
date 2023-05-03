@@ -5,6 +5,7 @@ import h5py as h5
 import math
 import sys
 import os.path
+from . import webaccess
 
 TILESIZE = 512
 IMAGESIZE = TILESIZE * 33
@@ -51,9 +52,7 @@ class RunInfo:
         class, loading the data from the given hdf5 file.
         pp = RUNINFO() loads the data from the 'positionsummary.h5' 
         file in the em170428 directory.'''
-        if ifn is None:
-            here = os.path.dirname(__file__)
-            ifn = here + '/../data/positionsummary.h5'
+        ifn = webaccess.ensurefile(ifn, "positionsummary.h5")
         self.f = h5.File(ifn, 'r')
 
     BLEND = 1024

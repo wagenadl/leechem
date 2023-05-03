@@ -1,20 +1,19 @@
 #!/usr/bin/python3
 
-import em170428
-
+import leechem
 import numpy as np
 import matplotlib.pyplot as plt 
 
 ############ GENERAL PREPARATION #####################################
 # Connect to the tracing database
-db = em170428.sbemdb.SBEMDB()
+db = leechem.sbemdb.SBEMDB()
 
 # Create a mapping object for converting between various forms of neuron ID
-mp = em170428.mapping.Mapping()
+mp = leechem.mapping.Mapping()
 
 ############ VSD/EPHYS EXAMPLE #######################################
 # Load electrophysiology/VSD trial #9 (an example of local bending)
-tr = em170428.trials.Trial(9)
+tr = leechem.trials.Trial(9)
 
 # Extract timing of electrophysiological stimulus
 stm = tr.stimuli()['P_VL']
@@ -44,7 +43,7 @@ plt.title('VSD trace of DE-3(R) during local bend trial #9')
 
 ############ VSD/EM EXAMPLE ##########################################
 # Load electrophysiology/VSD trial #6 (an example of fictive swimming)
-tr = em170428.trials.Trial(6)
+tr = leechem.trials.Trial(6)
 
 # Extract timestamps for the VSD recording
 tt = tr.vsd().timestamps()[0]
@@ -155,7 +154,7 @@ plt.ylabel('Synapse count')
 plt.title('Postsynaptic distance along tree for synapses from DI-1(R) onto DE-3(R)')
 
 ########################## RAW EM DATA EXAMPLE #1 ######################
-idb = em170428.sbemimage.ImageDB()
+idb = leechem.sbemimage.ImageDB()
 # A series of 2x-zoom steps into the raw data
 f, ax = plt.subplots(3,3)
 x = 30

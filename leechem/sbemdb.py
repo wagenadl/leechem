@@ -4,6 +4,7 @@ import numpy as np
 import sqlite3
 import errno
 import os
+from . import webaccess
 
 class LineSegmentGeom:
     def _dif(pa, pb):
@@ -62,12 +63,7 @@ class SBEMDB:
         '''SBEMDB - Pythonic access to SBEMDB
         db = SBEMDB(dbfn) opens the given database file. db = SBEMDB() opens
         the database file in the em170428 directory.'''
-        if dbfn is None:
-            here = os.path.dirname(__file__)
-            dbfn = here + '/../data/170428_pub.sbemdb'
-        if not os.path.isfile(dbfn):
-            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT),
-                                    dbfn)
+        dbfn = webaccess.ensurefile(dbfn, "170428_pub.sbemdb")
         self.db = sqlite3.connect(dbfn)
         self.dbfn = dbfn
 

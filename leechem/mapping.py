@@ -4,6 +4,7 @@ import numpy as np
 import csv
 import errno
 import os
+from . import webaccess
 
 class Mapping:
     def __init__(self, csvfn=None):
@@ -31,12 +32,9 @@ class Mapping:
         self.can2uct = {}
         self.roiid2roi = {}
         self.roi2roiid = {}
-        
-        if csvfn is None:
-            here = os.path.dirname(__file__)
-            csvfn = here + '/../data/mapping.csv'
+
         lines = []
-        with open(csvfn) as f:
+        with webaccess.opentextfile(csvfn, "mapping.csv") as f:
             dl = csv.unix_dialect()
             rdr = csv.reader(f, dl)
             for row in rdr:
